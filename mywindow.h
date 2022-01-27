@@ -7,20 +7,22 @@
 #include<QLineEdit>
 #include<QPushButton>
 #include<QMessageBox>
-
+#include <QLCDNumber>
+#include <QTimer>
 class MyWindow : public QWidget
 {
     Q_OBJECT
 private:
-    QLabel *lbl;
-    QLineEdit *edt;
+    QLCDNumber *lcd;
     QPushButton *btn;
-    QPushButton *btnClose;
+    QTimer *timer;
+    int second;
 public:
     MyWindow();
 public slots:
+    void time();
     void say();
-    void close();
+
 };
 
 #endif // MYWINDOW_H

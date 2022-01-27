@@ -2,36 +2,38 @@
 
 MyWindow::MyWindow()
 {
-    this->setGeometry(20,30,800,600);
+    this->setGeometry(20,30,400,300);
 
-    QFont *font = new QFont ("Time",22, true);
+    //QFont *font = new QFont ("Time",22, true);
 
-    lbl = new QLabel (this);
-    lbl ->setGeometry(20,30,300,60);
-    lbl ->setText("Имя");
-    lbl ->setFont(*font);
 
-    edt = new QLineEdit(this);
-    edt ->setGeometry(370,30,300,60);
+
+    lcd = new QLCDNumber(this);
+    lcd->setGeometry(50,50,200,30);
+    lcd->display(0);
+
 
     btn = new QPushButton(this);
     btn ->setGeometry(200,100,100,30);
-    btn->setText("Ok");
+    btn->setText("Старт");
 
-    btnClose = new QPushButton(this);
-    btnClose ->setGeometry(400,100,100,30);
-    btnClose->setText("Закрыть");
+   timer = new QTimer (this);
+   timer ->setInterval(1000);
+   second = 0;
 
-    connect(this->btn, SIGNAL (clicked(bool)),this, SLOT(say()));
-    connect(this->btnClose, SIGNAL (clicked(bool)),this, SLOT(close()));
+
+
+
+    connect(btn, SIGNAL(clicked(bool)),this, SLOT(say()));
+    connect(timer, SIGNAL(timeout()),this, SLOT(time()));
+
+
 }
- void MyWindow::say() {
- QString name = this ->edt->text();
- QMessageBox *mes =new QMessageBox(this);
- mes->setText(" привет "+name+"!");
- mes->show();
+ void MyWindow::time() {
+second++;
+lcd->display(second);
  }
- void MyWindow::close()
- {
-     exit(0);
+ void MyWindow::say() {
+timer ->start();
+
  }
